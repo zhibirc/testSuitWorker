@@ -1,0 +1,23 @@
+{
+  "name": "testSuitWorker",
+  "version": "0.0.1",
+  "description": "Worker for Test Suit cloud application",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zhibirc/testSuitWorker.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/zhibirc/testSuitWorker/issues"
+  },
+  "homepage": "https://github.com/zhibirc/testSuitWorker#readme",
+  "devDependencies": {
+    "debug": "^3.1.0"
+  }
+}
