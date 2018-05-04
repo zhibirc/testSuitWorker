@@ -1,0 +1,18 @@
+body {
+    font-family: "Courier New", Courier, monospace;
+}
+
+.logContainer {
+    margin-top: 50px;
+    text-align: center;
+}
+
+#submitLog {
+    background: #FF6347 !important;
+    border: none;
+    color: #232323;
+    cursor: pointer !important;
+    font: bold 16px inherit !important;
+    margin-top: 20px;
+    padding: 10px 20px;
+}

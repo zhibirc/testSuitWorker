@@ -1,4 +1,4 @@
-const path = require('path');
+const path           = require('path');
 const ZipFilesPlugin = require('webpack-zip-files-plugin');
 
 module.exports = {
@@ -8,7 +8,7 @@ module.exports = {
     ],
     // specify the output file containing our bundled code
     output: {
-        path: __dirname + '/app',
+        path: __dirname + '/app/js',
         filename: 'index.js',
         library: 'index',
         libraryTarget: 'umd'
@@ -21,7 +21,7 @@ module.exports = {
     plugins: [
         new ZipFilesPlugin({
             entries: [
-                {src: path.join(__dirname, './app/index.js'), dist: 'index.js'}
+                {src: path.join(__dirname, './app/js/index.js'), dist: 'index.js'}
             ],
             output: path.join(__dirname, './app/bundle'),
             format: 'zip',

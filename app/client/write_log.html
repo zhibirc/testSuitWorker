@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Write logs to DB from the client.">
+    <title>Write logs to DB from the client</title>
+    <link rel="icon" type="image/png" href="img/favicon.png">
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+<div class="logContainer">
+    <form action="POST">
+        <textarea id="textToLog" rows="10" cols="50" placeholder="Enter data to log..."></textarea><br>
+        <!--<input type="file">-->
+        <input type="submit" id="submitLog" value="Log me!">
+    </form>
+</div>
+
+<script>
+    const remoteURL = 'link';
+
+    let doc = document,
+        submitLogButton;
+
+
+    /**
+     *
+     */
+    function collectEnvData () {
+       return {
+           userAgent: navigator.userAgent,
+           platform: navigator.platform,
+           resolution: [screen.availWidth, screen.availHeight]
+       };
+    }
+
+
+    /**
+     * Check data and construct structured log message format.
+     *
+     * @param {string} data data collected form text fields and from environment
+     *
+     * @returns {*}
+     */
+    function formatLog ( data ) {
+        return {
+            environmentData: collectEnvData(),
+            userData: data
+        };
+    }
+
+
+    /**
+     *
+     * @param progressBar
+     * @param message
+     */
+    function setVisualProgress ( progressBar, message ) {
+        progressBar.value = message;
+    }
+
+
+    function sendLog ( log ) {
+        const xhr = new XMLHttpRequest();
+
+        xhr.open('POST', remoteURL);
+        xhr.setRequestHeader('X-Api-Key', 'key');
+        xhr.setRequestHeader('Content-Type', 'application/json');
+
+        xhr.addEventListener('load', () => {
+            setVisualProgress(submitLogButton, ['Fail!', 'Success!'][+(xhr.status === 200)]);
+
+            setTimeout(() => {
+               submitLogButton.disabled = false;
+               setVisualProgress(submitLogButton, 'Log me!');
+            }, 1000);
+        });
+
+        xhr.send(JSON.stringify(log));
+    }
+
+
+    doc.addEventListener('DOMContentLoaded', event => {
+        submitLogButton = doc.getElementById('submitLog');
+
+        submitLogButton.addEventListener('click', event => {
+            let log = formatLog(doc.getElementById('textToLog').value);
+
+            event.preventDefault();
+
+            submitLogButton.disabled = true;
+            setVisualProgress(submitLogButton, 'Checking...');
+
+            if ( log ) {
+                setVisualProgress(submitLogButton, 'Sending...');
+                sendLog(log);
+            } else {
+                submitLogButton.disabled = false;
+                setVisualProgress(submitLogButton, 'Log me!');
+                alert('Nothing to log!');
+            }
+        });
+    });
+</script>
+</body>
+</html>
